@@ -27,7 +27,7 @@
 
         <div class="col-md-3">
           <label for="rut" class="form-label">RUT:</label>
-          <input type="text" class="form-control" id="rut" maxlength="12" min="10" name="rut" required />
+          <input type="text" class="form-control" id="rut" maxlength="12" minlength="10" name="rut" required />
         </div>
 
         <div class="col-12">
@@ -63,16 +63,13 @@
           </div>
           <div class="modal-body">
             <section>
-              <form>
+              <form id="formAddImport">
                 <div class="mb-3">
                   <label for="id_empresa" class="form-label">ID Empresa:</label>
-                  <input type="number" class="form-control" id="id_empresa" name="id_empresa" required />
-                </div>
-
-                <div class="mb-3">
-                  <label for="id_importacion" class="form-label">ID Importación:</label>
-                  <input type="number" class="form-control" id="id_importacion" name="id_importacion" required />
-                </div>
+                  <select class="form-select" id="id_empresa" name="id_empresa" required>
+                    <option value="">Selecciona una empresa</option> 
+                  </select>
+                </div> 
 
                 <div class="mb-3">
                   <label for="producto" class="form-label">Producto:</label>
@@ -94,13 +91,28 @@
             </section>
           </div>
           <div class="modal-footer">
-            <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Back to
-              first</button>
+            <button class="btn btn-danger" data-bs-target="#modalImportaciones" data-bs-toggle="modal">Cerrar</button>
           </div>
         </div>
       </div>
     </div>
-
+    <div class="modal fade" id="modalMessage" aria-hidden="true" aria-labelledby="modalMessage"
+    tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="modalMessageTitutlo">Mensajes</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="messageModal">
+           
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-danger" data-bs-target="#modalMessage" data-bs-toggle="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
   </main>
   <footer>
 

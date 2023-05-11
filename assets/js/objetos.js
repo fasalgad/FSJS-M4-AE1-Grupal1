@@ -7,24 +7,28 @@ class Empresa {
   }
 
   getTotalImportaciones() {
-    let total = 0;
-    for (let importacion of this._importaciones) {
-      total += importacion.cantidad * importacion.precio_unitario;
-    }
-    return total;
+    return this._importaciones.reduce((total, importacion) => {
+      let importa = new Importacion(importacion._id, importacion._producto, importacion._cantidad, importacion._precio_unitario);
+      return total + importa.getTotal();
+    }, 0);
   }
 
   getTotalPorProducto() {
     const totalPorProducto = {};
-    for (let importacion of this._importaciones) {
-      const { producto, cantidad, precio_unitario } = importacion;
+    this._importaciones.forEach((importacion) => {
+      let importa = new Importacion(importacion._id, importacion._producto, importacion._cantidad, importacion._precio_unitario);
+      const producto = importa.producto;
       if (!totalPorProducto[producto]) {
-        totalPorProducto[producto] = cantidad * precio_unitario;
+        totalPorProducto[producto] = importa.getTotal();
       } else {
-        totalPorProducto[producto] += cantidad * precio_unitario;
+        totalPorProducto[producto] += importa.getTotal();
       }
+    });
+    let resultado = [];
+    for (let producto in totalPorProducto) {
+      resultado.push({ nombre:producto, total: totalPorProducto[producto] });
     }
-    return totalPorProducto;
+    return  resultado
   }
 
   get id() {
@@ -56,7 +60,18 @@ class Empresa {
   }
 
   set importaciones(value) {
-    this._importaciones = value;
+    if (value) {
+      if (Array.isArray(value)) {
+        if (this._importaciones.length > 0) {
+          this._importaciones.concat(value);
+        } else {
+          this._importaciones = value;
+        }
+
+      } else {
+        this._importaciones.push(value);
+      }
+    }
   }
 }
 
@@ -66,6 +81,7 @@ class Importacion {
     this._producto = producto;
     this._cantidad = cantidad;
     this._precio_unitario = precio_unitario;
+    console.log(id, producto, cantidad, precio_unitario)
   }
 
   getInfo() {
@@ -105,7 +121,7 @@ class Importacion {
   }
 
   getTotal() {
-    return this._cantidad * this._precio_unitario;
+    return this.cantidad * this.precio_unitario;
   }
 }
 
@@ -117,4 +133,4 @@ class Importacion {
 // empresa.agregarImportacion(4, 'Producto B', 15, 180);
 
 // const totalPorProducto = empresa.getTotalPorProducto();
- 
+
