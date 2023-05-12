@@ -88,7 +88,11 @@ const getTotalImportaciones = (idEmpresa) => {
   const oEmpresa = new Empresa(empresa._id, empresa._nombre, empresa._rut);
   oEmpresa.importaciones = empresa._importaciones;
   const total = oEmpresa.getTotalImportaciones()
-  showMessage(`<p>El total de importaciones de la empresa ${oEmpresa.nombre} es: </p><strong>${total} ${total>1?'importaciones':'importación'}</strong>`)
+  const totalMonto = oEmpresa.getTotalImportacionesMonto()
+  showMessage(`<p>El total de importaciones de la empresa ${oEmpresa.nombre} es: </p>
+  <strong>${total} ${total>1?'importaciones':'importación'}</strong> de un total monetario de 
+  <strong>${totalMonto.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' })}</strong>
+  `)
 }
 
 const getTotalPorProducto = (idEmpresa) => {
