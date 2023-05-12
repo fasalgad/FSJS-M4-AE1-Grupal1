@@ -88,7 +88,7 @@ const getTotalImportaciones = (idEmpresa) => {
   const oEmpresa = new Empresa(empresa._id, empresa._nombre, empresa._rut);
   oEmpresa.importaciones = empresa._importaciones;
   const total = oEmpresa.getTotalImportaciones()
-  showMessage(`El total de importaciones de la empresa ${oEmpresa.nombre} es: ${total}`)
+  showMessage(`<p>El total de importaciones de la empresa ${oEmpresa.nombre} es: </p><strong>${total} ${total>1?'importaciones':'importación'}</strong>`)
 }
 
 const getTotalPorProducto = (idEmpresa) => {
@@ -97,13 +97,15 @@ const getTotalPorProducto = (idEmpresa) => {
   const oEmpresa = new Empresa(empresa._id, empresa._nombre, empresa._rut);
   oEmpresa.importaciones = empresa._importaciones;
   const produtos = oEmpresa.getTotalPorProducto()
-  let table = '<table class="table"><thead><tr><th>Producto</th><th>Total</th></tr></thead><tbody>'
+  let table = '<table class="table"><thead><tr><th>Producto</th><th>Cantidad</th><th>Precio Unitario</th><th>Total</th></tr></thead><tbody>'
   produtos.forEach((producto) => {
-    const { nombre, total } = producto;
-    console.log(nombre, total)
+    const { nombre, total,cantidad,precio_unitario } = producto;
+    console.log(producto)
     table += `
     <tr>
     <td>${nombre}</td>
+    <td>${cantidad}</td>
+    <td>${precio_unitario.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' })}</td>
     <td>${total.toLocaleString('es-CL', { style: 'currency', currency: 'CLP' })}</td>
     </tr>
     `;

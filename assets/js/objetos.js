@@ -7,6 +7,10 @@ class Empresa {
   }
 
   getTotalImportaciones() {
+    return this._importaciones.length;
+  }
+
+  getTotalImportacionesMonto() {
     return this._importaciones.reduce((total, importacion) => {
       let importa = new Importacion(importacion._id, importacion._producto, importacion._cantidad, importacion._precio_unitario);
       return total + importa.getTotal();
@@ -19,16 +23,16 @@ class Empresa {
       let importa = new Importacion(importacion._id, importacion._producto, importacion._cantidad, importacion._precio_unitario);
       const producto = importa.producto;
       if (!totalPorProducto[producto]) {
-        totalPorProducto[producto] = importa.getTotal();
+        totalPorProducto[producto] = { cantidad: importa.cantidad, precio_unitario: importa.precio_unitario, total: importa.getTotal() };
       } else {
-        totalPorProducto[producto] += importa.getTotal();
+        totalPorProducto[producto].total += importa.getTotal();
       }
     });
     let resultado = [];
     for (let producto in totalPorProducto) {
-      resultado.push({ nombre:producto, total: totalPorProducto[producto] });
+      resultado.push({ nombre: producto, ...totalPorProducto[producto] });
     }
-    return  resultado
+    return resultado
   }
 
   get id() {
